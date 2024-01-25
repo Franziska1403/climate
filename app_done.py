@@ -18,7 +18,6 @@ password = os.getenv('POSTGRES_PW')
 host = os.getenv('POSTGRES_HOST')
 port = os.getenv('POSTGRES_PORT')
 
-
 #get the data
 df_climate_final = pd.read_csv("/Users/franziskaoschmann/Desktop/Spiced Academy/GitHub Spiced Academy/lemongrass-regression-student-code/week_08_dashboards/05_dash_with_plotly/climate_final.csv")
 df_monthly_final = pd.read_csv("/Users/franziskaoschmann/Desktop/Spiced Academy/GitHub Spiced Academy/lemongrass-regression-student-code/week_08_dashboards/05_dash_with_plotly/df_monthly_final.csv")
