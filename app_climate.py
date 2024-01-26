@@ -146,8 +146,6 @@ fig4 = fig4.update_layout(
     )
 graph4 = dcc.Graph(figure=fig4) #make it ready for the dash
 
-fig4.show()
-
 #########
 
 #setting up the theme
