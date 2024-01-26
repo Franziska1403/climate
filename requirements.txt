@@ -7,3 +7,4 @@ sqlalchemy==2.0.25
 dash_bootstrap_components
 python-dotenv
 psycopg2==2.9.9
+
