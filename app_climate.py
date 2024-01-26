@@ -259,4 +259,4 @@ def update_line_chart(city):
     return fig4 
 # Run the app
 if __name__ == '__main__':
-    app.run_server(host= "localhost", port = "8150", debug = True)
+    app.run_server(host= "localhost", port = "8151", debug = True)
