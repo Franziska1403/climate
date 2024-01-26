@@ -48,7 +48,7 @@ color_madrid = '#ffb347' #orange
 color_paris = '#e6a8d7' #purple
 color_tel_aviv = '#93c572'#green
 
-##set up the tables 
+#set up the tables 
 #graph 1) world view
 df_climate_final["date"].min(), df_climate_final["date"].max()
 
@@ -67,7 +67,6 @@ graph1.update_layout(
     plot_bgcolor="blue", # Background color for the plotting area only
     geo_bgcolor=bg_color
 )
-
 graph1 = dcc.Graph(figure=graph1)
 
 #let's create a line chart with the focus on Berlin (average max and min temperature in the respective month
@@ -109,7 +108,7 @@ fig2 = px.bar(df_temp_month,
              color_discrete_map =color_palette,
              barmode = "group",
              height = 300,
-             title = "Average Temperature in 2023 - A Comparison between the four cities"
+             title = "Average Temperature in 2023 - A Comparison between the four cities",
              )
 
 # Customize the title, axis titles, and descriptions colors
@@ -124,14 +123,12 @@ fig2.update_layout(
     font_color=font_color,
 )
 graph2 = dcc.Graph(figure=fig2)
-
 #lets add the df_monthly_avg to the dash: 
 d_table1 = dash_table.DataTable(df_monthly_avg.to_dict('records'),
                                   [{"name": i, "id": i} for i in df_monthly_avg.columns],
                                style_data={'color': "white",'backgroundColor': plot_bgcolor},
                                style_header={'backgroundColor': plot_bgcolor,
                                              'color': title_font,'fontWeight': 'bold', "textAlign":"center",'padding': 10})
-
 #new line graph; average min 
 #plotting the graph
 fig4 = px.line(df_line, x='month', y='avg_mintemp_c', height=300, title="Average Minimum Temperature", markers=True, color = "city", color_discrete_map =color_palette)
@@ -148,11 +145,9 @@ graph4 = dcc.Graph(figure=fig4) #make it ready for the dash
 
 fig4.show()
 
-#########
+
 
 #setting up the theme
-
-df_monthly_final.to_csv(r'df_monthly_final.txt', header=None, index=None, sep=',')
 app = dash.Dash(external_stylesheets=[dbc.themes.UNITED])
 server = app.server
 
@@ -163,11 +158,8 @@ dropdown1 = dcc.Dropdown(
     options=[{'label': 'Berlin', 'value': 'Berlin'}, {'label': 'Paris', 'value': 'Paris'}, {'label': 'Madrid', 'value': 'Madrid'}, {'label': 'Tel Aviv-Yafo', 'value': 'Tel Aviv-Yafo'}],
     value='Berlin',  # default value
     clearable=False,
-    style={'backgroundColor': plot_bgcolor, 'color':legend}
+    style={'backgroundColor': 'plot_bgcolor', 'color': 'white'}
 )
-
-radio1= dcc.RadioItems(id="city",options=['Berlin', 'Paris', 'Madrid', 'Tel Aviv-Yafo'], value="Berlin", 
-                      inline=True, style ={'paddingLeft': '30px', 'backgroundColor': plot_bgcolor, 'color': legend,'margin-right': '20px'})
 
 
 server = app.server
@@ -175,46 +167,20 @@ server = app.server
 # Setting up the layout
 app.layout = html.Div([
     html.Div([
-        html.H1('My First Spicy Dash', style={'textAlign': 'center', 'color': color_madrid, 'fontWeight': 'bold', "backgroundColor": plot_bgcolor, 'margin': '0', 'padding': 10}),
-        html.H2('A Dashboard designed by Franziska Oschmann', style={'textAlign': 'center', 'color': color_tel_aviv, 'fontSize': '30px', 'fontWeight': 'bold', "backgroundColor": plot_bgcolor, 'margin': '0', 'padding': 10}),
-        html.H3('Created from 21 until 26 January 2024', style={'textAlign': 'center', 'color': color_paris, 'fontWeight': 'bold', "backgroundColor": plot_bgcolor, 'margin': '0', 'padding': 10}),
+        html.H1('My First Spicy Dash', style={'textAlign': 'center', 'color': title_font, 'fontSize': '50px', 'fontWeight': 'bold', "backgroundColor": plot_bgcolor, 'margin': '0', 'padding': 10}),
+        html.H2('A Dashboard designed by Franziska Oschmann', style={'textAlign': 'center', 'color': title_font, 'fontSize': '30px', 'fontWeight': 'bold', "backgroundColor": plot_bgcolor, 'margin': '0', 'padding': 10}),
+        html.H3('24 January 2024', style={'textAlign': 'center', 'color': title_font, 'fontSize': '20px', 'fontWeight': 'bold', "backgroundColor": plot_bgcolor, 'margin': '0', 'padding': 10}),
         html.H4("This Dashboard provides an overview about the weather in Paris, Berlin, Madrid and Tel Aviv: Enjoy exploring it",
-                style={'textAlign': 'center','fontWeight': 'bold', "color":color_berlin, "backgroundColor": plot_bgcolor, 'margin': '0', 'padding': 10})
+                style={'textAlign': 'center','fontWeight': 'bold', "color":title_font, "backgroundColor": plot_bgcolor, 'margin': '0', 'padding': 10})
     ]),
     html.Div([
-    html.H3("Here you can find the world view", style={'textAlign': 'center', 'color': title_font, "backgroundColor": plot_bgcolor, 'margin': '0', 'padding': 10}),
-    graph1,
-    html.H4("This is a table showing you the average temperature in 2023 per month in the cities I lived in", style={"color": title_font, "backgroundColor": plot_bgcolor, 'margin': '0', 'padding': 10, 'fontWeight': 'bold'}),
-    html.Div([
-        html.Button("Download Data Here", id="btn-download-txt", 
-                    style={'marginLeft': 50, 'marginRight': 25,
-                           'marginTop': 10, 'marginBottom': "30", 
-                           "color": plot_bgcolor, "backgroundColor": legend,
-                           'fontWeight': 'bold'}),
-        dcc.Download(id="download-text")
-    ]), 
-    d_table1,
-    graph3, 
-    dropdown1, 
-    graph2, 
-    radio1, 
-    graph4
-], style={"color": legend, "backgroundColor": plot_bgcolor, 'fontWeight': 'bold'})
-
-])
-
-                       
-@callback(
-    Output("download-text", "data"),
-    Input("btn-download-txt", "n_clicks"),
-    prevent_initial_call=True
-)
-
-
-def download_table(n_clicks):
-    return dict(content=monthly_final_download, filename="climate_monthly_final.csv")
-
-
+        html.H3("Here you can find the world view", style={'textAlign': 'center', 'color': title_font, 'fontSize': '30px', "backgroundColor": plot_bgcolor, 'margin': '0', 'padding': 10}),
+        graph1,
+        html.H3("This is a table showing you the average temperature in 2023 per month in the cities I lived in", style = {"color": title_font, 'fontSize':'10 px',"backgroundColor": plot_bgcolor, 'margin': '0', 'padding': 10}),
+        d_table1,graph3, dropdown1, 
+        graph2
+    ])
+]) 
 
 @callback(
     Output(graph2, "figure"), 
@@ -234,31 +200,8 @@ def update_bar_chart(country):
         paper_bgcolor=paper_bgcolor,
         font_color=font_color
     )
-    return fig # whatever you are returning here is connected to the component property of the output which is figure
-
-@callback(
-    Output(graph4, "figure"), 
-    Input(radio1, "value"))
-
-def update_line_chart(city): 
-    mask = df_line["city"] == (city)
-    fig4 =px.line(df_line[mask], 
-             x='month', 
-             y='avg_mintemp_c',  
-             color='city',
-             color_discrete_map = color_palette,
-             height=300,
-             title = "Berlin vs. Paris vs. Madrid and Tel-Aviv"
-                 )
-    fig4 = fig4.update_layout(plot_bgcolor=plot_bgcolor,
-                              paper_bgcolor=paper_bgcolor,
-                              font_color=font_color, 
-                              xaxis_title=dict(text="Month", font=dict(color=legend)),
-                              yaxis_title=dict(text="Average Minimum Temperature (°C)", font=dict(color=legend)),
-                              xaxis=dict(tickfont=dict(color=legend)),
-                              yaxis=dict(tickfont=dict(color=legend)))
-
-    return fig4 
+    return fig # whatever you are returning here is connected to the component property of
+                       #the output which is figure
 # Run the app
 if __name__ == '__main__':
-    app.run_server(host= "localhost", port = "8150", debug = True)
+    app.run_server(host= "localhost", port = "8050", debug = True)
