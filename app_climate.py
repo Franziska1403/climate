@@ -21,7 +21,8 @@ port = os.getenv('POSTGRES_PORT')
 #get the data
 df_climate_final = pd.read_csv("/Users/franziskaoschmann/Desktop/Spiced Academy/GitHub Spiced Academy/lemongrass-regression-student-code/week_08_dashboards/05_dash_with_plotly/climate_final.csv")
 df_monthly_final = pd.read_csv("/Users/franziskaoschmann/Desktop/Spiced Academy/GitHub Spiced Academy/lemongrass-regression-student-code/week_08_dashboards/05_dash_with_plotly/df_monthly_final.csv")
-
+df_temp = pd.read_csv("/Users/franziskaoschmann/Desktop/Spiced Academy/GitHub Spiced Academy/climate_repo/data/df_temp.csv")
+df_monthly_avg = pd.read_csv("/Users/franziskaoschmann/Desktop/Spiced Academy/GitHub Spiced Academy/climate_repo/data/df_monthly_avg.csv")
 #set up the color code
 #BAR CHART COLOR CHOICES
 
@@ -187,4 +188,4 @@ def update_bar_chart(country):
                        #the output which is figure
 # Run the app
 if __name__ == '__main__':
-    app.run_server(host="localhost", mode="inline")
+    app.run_server(host= "localhost", port = "8050", debug = True)
